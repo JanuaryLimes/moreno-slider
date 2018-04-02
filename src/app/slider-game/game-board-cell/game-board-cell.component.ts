@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { SliderManager } from '../game-logic/slider-manager';
+import { GameCell } from '../game-logic/game-cell';
 
 @Component({
   selector: 'slider-game-board-cell',
@@ -9,11 +11,14 @@ export class GameBoardCellComponent implements OnInit {
   @Input() rowNumber: number;
   @Input() columnNumber: number;
 
-  constructor() {}
+  constructor(private sliderManager: SliderManager) {}
 
   ngOnInit() {}
 
   onClick() {
     console.log(`row: ${this.rowNumber} col: ${this.columnNumber}`);
+    this.sliderManager.GameCellSubject.next(
+      new GameCell(this.rowNumber, this.columnNumber)
+    );
   }
 }
