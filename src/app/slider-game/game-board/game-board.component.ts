@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./game-board.component.css']
 })
 export class GameBoardComponent implements OnInit {
+  private rowCount = 4;
+  private columnCount = 4;
 
-  constructor() { }
+  rows = [].constructor(this.rowCount);
+  columns = [].constructor(this.columnCount);
 
-  ngOnInit() {
-  }
+  constructor() {}
 
+  ngOnInit() {}
 }

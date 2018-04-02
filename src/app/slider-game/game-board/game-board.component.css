@@ -1,0 +1,14 @@
+.child-row {
+  display: block;
+  text-align: center;
+}
+
+.cell {
+  display: inline-block;
+  text-align: initial;
+  padding: 2px;
+}
+
+.cell:hover {
+  cursor: pointer;
+}
