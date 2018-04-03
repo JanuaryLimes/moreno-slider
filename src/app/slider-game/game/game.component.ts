@@ -14,7 +14,7 @@ export class GameComponent implements OnInit, OnDestroy {
   constructor(private sliderManager: SliderManager) {}
 
   ngOnInit() {
-    this.subscription = this.sliderManager.GameCellSubject.subscribe(
+    this.subscription = this.sliderManager.GameCellClicked.subscribe(
       gameCell => {
         console.log(
           `from subscription... row: ${(gameCell as GameCell).row}, col: ${

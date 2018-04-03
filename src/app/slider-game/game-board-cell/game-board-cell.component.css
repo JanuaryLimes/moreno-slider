@@ -1,4 +1,8 @@
-div {
+.inner {
   border: 1px solid gray;
   padding: 1em;
+}
+
+.outer {
+  padding: 2px;
 }

@@ -6,7 +6,6 @@
 .cell {
   display: inline-block;
   text-align: initial;
-  padding: 2px;
 }
 
 .cell:hover {

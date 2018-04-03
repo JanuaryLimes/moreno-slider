@@ -17,7 +17,7 @@ export class GameBoardCellComponent implements OnInit {
 
   onClick() {
     console.log(`row: ${this.rowNumber} col: ${this.columnNumber}`);
-    this.sliderManager.GameCellSubject.next(
+    this.sliderManager.GameCellClicked.next(
       new GameCell(this.rowNumber, this.columnNumber)
     );
   }

@@ -5,7 +5,7 @@ import { GameCell } from './game-cell';
 
 @Injectable()
 export class SliderManager {
-  GameCellSubject = new Subject<GameCell>();
+  GameCellClicked = new Subject<GameCell>();
 
   constructor() {}
 }
