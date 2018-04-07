@@ -20,6 +20,7 @@ import { GameCell, Consts } from '../game-logic/game-cell';
 export class GameComponent implements OnInit, OnDestroy {
   s2: Subscription;
   subscription: Subscription;
+  lastHiddenComponent: GameBoardCellComponent;
 
   constructor(
     private sliderManager: SliderManager,
@@ -30,11 +31,7 @@ export class GameComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.sliderManager.GameCellClicked.subscribe(
       gameCell => {
-        console.log(
-          `from subscription... row: ${(gameCell as GameCell).row}, col: ${
-            (gameCell as GameCell).column
-          }`
-        );
+        this.gameCellClicked(gameCell);
       }
     );
     this.s2 = this.sliderManager.BoardLoaded.subscribe(() => {
@@ -57,6 +54,18 @@ export class GameComponent implements OnInit, OnDestroy {
     const cell = this.sliderManager.gameCells[
       this.sliderManager.gameCells.length - 1
     ];
+    this.lastHiddenComponent = cell;
     cell.visibilityClass = Consts.HIDDEN;
+  }
+
+  gameCellClicked(gameCell: GameCell): any {
+    console.log(
+      `from subscription... row: ${gameCell.row}, col: ${gameCell.column}`
+    );
+    this.lastHiddenComponent.visibilityClass = '';
+    this.lastHiddenComponent.dynamiCell.context.num =
+      gameCell.component.dynamiCell.context.num;
+    gameCell.component.visibilityClass = Consts.HIDDEN;
+    this.lastHiddenComponent = gameCell.component;
   }
 }

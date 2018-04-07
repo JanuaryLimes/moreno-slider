@@ -1,10 +1,13 @@
+import { GameBoardCellComponent } from './../game-board-cell/game-board-cell.component';
 export class GameCell {
   row: number;
   column: number;
+  component: GameBoardCellComponent;
 
-  constructor(row: number, column: number) {
+  constructor(row: number, column: number, component: GameBoardCellComponent) {
     this.row = row;
     this.column = column;
+    this.component = component;
   }
 }
 
