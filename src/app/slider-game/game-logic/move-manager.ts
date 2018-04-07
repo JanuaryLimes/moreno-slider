@@ -10,8 +10,8 @@ export class MoveManager {
   public hiddenComponent: GameBoardCellComponent;
   public clickedComponent: GameBoardCellComponent;
 
-  public tryClick(gameCell: GameCell): any {
-    this.clickedComponent = gameCell.component;
+  public tryClick(component: GameBoardCellComponent): any {
+    this.clickedComponent = component;
 
     if (!this.isClickValid()) {
       return;
@@ -19,10 +19,10 @@ export class MoveManager {
 
     this.hiddenComponent.visibilityClass = Consts.VISIBLE;
     this.hiddenComponent.dynamiCell.context.num =
-      gameCell.component.dynamiCell.context.num;
+      component.dynamiCell.context.num;
 
-    gameCell.component.visibilityClass = Consts.HIDDEN;
-    this.hiddenComponent = gameCell.component;
+    component.visibilityClass = Consts.HIDDEN;
+    this.hiddenComponent = component;
   }
 
   private isClickValid(): boolean {
