@@ -31,12 +31,16 @@ export class GameBoardComponent implements OnInit, AfterViewInit {
     console.log('after..', this.cells.length);
 
     this.cells.forEach(cell => {
-      const e = cell.elem.nativeElement.querySelector('.inner');
+      // const e = cell.elem.nativeElement.querySelector('.inner');
       // console.log(e);
-      this.sliderManager.gameCells.push(e);
+      // console.log("d", cell.dynamiCell.context.)
+      this.sliderManager.gameCells.push(cell);
     });
 
     console.log(this.sliderManager.gameCells.length);
-    this.sliderManager.BoardLoaded.next();
+
+    Promise.resolve(null).then(() => {
+      this.sliderManager.BoardLoaded.next();
+    });
   }
 }

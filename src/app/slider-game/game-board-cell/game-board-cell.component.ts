@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, ElementRef } from '@angular/core';
+import { DynamicCellComponent } from './../dynamic-cell/dynamic-cell.component';
+import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { SliderManager } from '../game-logic/slider-manager';
 import { GameCell } from '../game-logic/game-cell';
 
@@ -10,6 +11,10 @@ import { GameCell } from '../game-logic/game-cell';
 export class GameBoardCellComponent implements OnInit {
   @Input() rowNumber: number;
   @Input() columnNumber: number;
+
+  visibilityClass: string;
+
+  @ViewChild(DynamicCellComponent) dynamiCell: DynamicCellComponent;
 
   constructor(private sliderManager: SliderManager, public elem: ElementRef) {}
 

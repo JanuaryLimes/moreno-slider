@@ -1,3 +1,4 @@
+import { GameBoardCellComponent } from './../game-board-cell/game-board-cell.component';
 import { SliderManager } from './../game-logic/slider-manager';
 import {
   Component,
@@ -9,7 +10,7 @@ import {
   EmbeddedViewRef
 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { GameCell } from '../game-logic/game-cell';
+import { GameCell, Consts } from '../game-logic/game-cell';
 
 @Component({
   selector: 'slider-game',
@@ -37,7 +38,7 @@ export class GameComponent implements OnInit, OnDestroy {
       }
     );
     this.s2 = this.sliderManager.BoardLoaded.subscribe(() => {
-      // this.loaded();
+      this.loaded();
     });
   }
 
@@ -49,23 +50,13 @@ export class GameComponent implements OnInit, OnDestroy {
   loaded() {
     console.log('loadedddd');
 
-    this.sliderManager.gameCells.forEach((div, index) => {
-      // div.innerHTML = index;
-      // div.innerHTML = index.toString();
-      // div.appendChild(this.CreateComponent(TileComponent, index));
+    this.sliderManager.gameCells.forEach((gameBoardCellComponent, index) => {
+      gameBoardCellComponent.dynamiCell.context.num = index + 1;
     });
-  }
 
-  CreateComponent(component: any, index: number): any {
-    // (component as TileComponent).num = index;
-
-    const componentRef = this.componentFactoryResolver
-      .resolveComponentFactory(component)
-      .create(this.injector);
-
-    const domElem = (componentRef.hostView as EmbeddedViewRef<any>)
-      .rootNodes[0] as HTMLElement;
-
-    return domElem;
+    const cell = this.sliderManager.gameCells[
+      this.sliderManager.gameCells.length - 1
+    ];
+    cell.visibilityClass = Consts.HIDDEN;
   }
 }

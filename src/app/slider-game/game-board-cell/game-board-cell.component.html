@@ -1,3 +1,5 @@
-<div class="outer" (click)="onClick()">
-  <div class="inner" id="r{{rowNumber+1}}-c{{columnNumber+1}}"></div>
+<div class="outer {{visibilityClass}}" (click)="onClick()">
+  <div class="inner">
+    <slider-dynamic-cell id="r{{rowNumber}}-c{{columnNumber}}"></slider-dynamic-cell>
+  </div>
 </div>

@@ -7,3 +7,15 @@ export class GameCell {
     this.column = column;
   }
 }
+
+export interface IDynamicContext {
+  context: DynamicContext;
+}
+
+export class DynamicContext {
+  num: Number;
+}
+
+export class Consts {
+  static readonly HIDDEN = 'visibility-hidden';
+}
