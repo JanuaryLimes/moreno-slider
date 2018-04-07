@@ -6,6 +6,9 @@ import { GameCell } from './game-cell';
 @Injectable()
 export class SliderManager {
   GameCellClicked = new Subject<GameCell>();
+  BoardLoaded = new Subject();
+
+  gameCells: HTMLElement[] = new Array();
 
   constructor() {}
 }

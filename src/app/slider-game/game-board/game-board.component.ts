@@ -1,18 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChildren,
+  QueryList,
+  AfterViewInit
+} from '@angular/core';
+import { GameBoardCellComponent } from '../game-board-cell/game-board-cell.component';
+import { SliderManager } from '../game-logic/slider-manager';
 
 @Component({
   selector: 'slider-game-board',
   templateUrl: './game-board.component.html',
   styleUrls: ['./game-board.component.css']
 })
-export class GameBoardComponent implements OnInit {
+export class GameBoardComponent implements OnInit, AfterViewInit {
+  @ViewChildren(GameBoardCellComponent)
+  cells: QueryList<GameBoardCellComponent>;
+
   private rowCount = 4;
   private columnCount = 4;
 
   rows = [].constructor(this.rowCount);
   columns = [].constructor(this.columnCount);
 
-  constructor() {}
+  constructor(private sliderManager: SliderManager) {}
 
   ngOnInit() {}
+
+  ngAfterViewInit(): void {
+    console.log('after..', this.cells.length);
+
+    this.cells.forEach(cell => {
+      const e = cell.elem.nativeElement.querySelector('.inner');
+      // console.log(e);
+      this.sliderManager.gameCells.push(e);
+    });
+
+    console.log(this.sliderManager.gameCells.length);
+    this.sliderManager.BoardLoaded.next();
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { SliderManager } from '../game-logic/slider-manager';
 import { GameCell } from '../game-logic/game-cell';
 
@@ -11,7 +11,7 @@ export class GameBoardCellComponent implements OnInit {
   @Input() rowNumber: number;
   @Input() columnNumber: number;
 
-  constructor(private sliderManager: SliderManager) {}
+  constructor(private sliderManager: SliderManager, public elem: ElementRef) {}
 
   ngOnInit() {}
 
