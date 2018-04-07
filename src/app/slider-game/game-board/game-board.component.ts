@@ -13,7 +13,7 @@ import { SliderManager } from '../game-logic/slider-manager';
   templateUrl: './game-board.component.html',
   styleUrls: ['./game-board.component.css']
 })
-export class GameBoardComponent implements OnInit, AfterViewInit {
+export class GameBoardComponent implements OnInit {
   @ViewChildren(GameBoardCellComponent)
   cells: QueryList<GameBoardCellComponent>;
 
@@ -23,24 +23,15 @@ export class GameBoardComponent implements OnInit, AfterViewInit {
   rows = [].constructor(this.rowCount);
   columns = [].constructor(this.columnCount);
 
-  constructor(private sliderManager: SliderManager) {}
+  constructor(private sliderManager: SliderManager) {
+    sliderManager.BoardLoaded.subscribe(() => {
+      this.boardLoaded();
+    });
+  }
 
   ngOnInit() {}
 
-  ngAfterViewInit(): void {
-    console.log('after..', this.cells.length);
-
-    this.cells.forEach(cell => {
-      // const e = cell.elem.nativeElement.querySelector('.inner');
-      // console.log(e);
-      // console.log("d", cell.dynamiCell.context.)
-      this.sliderManager.gameCells.push(cell);
-    });
-
-    console.log(this.sliderManager.gameCells.length);
-
-    Promise.resolve(null).then(() => {
-      this.sliderManager.BoardLoaded.next();
-    });
+  boardLoaded(): any {
+    this.sliderManager.updateGameCells(this.cells);
   }
 }

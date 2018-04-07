@@ -7,7 +7,8 @@ import {
   ComponentFactoryResolver,
   Injector,
   ComponentRef,
-  EmbeddedViewRef
+  EmbeddedViewRef,
+  AfterViewInit
 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { GameCell, Consts } from '../game-logic/game-cell';
@@ -17,26 +18,19 @@ import { GameCell, Consts } from '../game-logic/game-cell';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css']
 })
-export class GameComponent implements OnInit, OnDestroy {
+export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   s2: Subscription;
   subscription: Subscription;
-  lastHiddenComponent: GameBoardCellComponent;
 
-  constructor(
-    private sliderManager: SliderManager,
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private injector: Injector
-  ) {}
+  constructor(private sliderManager: SliderManager) {}
 
   ngOnInit() {
+    const that = this;
     this.subscription = this.sliderManager.GameCellClicked.subscribe(
       gameCell => {
-        this.gameCellClicked(gameCell);
+        that.sliderManager.clicked(gameCell);
       }
     );
-    this.s2 = this.sliderManager.BoardLoaded.subscribe(() => {
-      this.loaded();
-    });
   }
 
   ngOnDestroy(): void {
@@ -44,28 +38,9 @@ export class GameComponent implements OnInit, OnDestroy {
     this.s2.unsubscribe();
   }
 
-  loaded() {
-    console.log('loadedddd');
-
-    this.sliderManager.gameCells.forEach((gameBoardCellComponent, index) => {
-      gameBoardCellComponent.dynamiCell.context.num = index + 1;
+  ngAfterViewInit(): void {
+    Promise.resolve(null).then(() => {
+      this.sliderManager.BoardLoaded.next();
     });
-
-    const cell = this.sliderManager.gameCells[
-      this.sliderManager.gameCells.length - 1
-    ];
-    this.lastHiddenComponent = cell;
-    cell.visibilityClass = Consts.HIDDEN;
-  }
-
-  gameCellClicked(gameCell: GameCell): any {
-    console.log(
-      `from subscription... row: ${gameCell.row}, col: ${gameCell.column}`
-    );
-    this.lastHiddenComponent.visibilityClass = '';
-    this.lastHiddenComponent.dynamiCell.context.num =
-      gameCell.component.dynamiCell.context.num;
-    gameCell.component.visibilityClass = Consts.HIDDEN;
-    this.lastHiddenComponent = gameCell.component;
   }
 }

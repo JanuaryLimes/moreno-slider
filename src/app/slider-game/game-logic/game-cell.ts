@@ -1,4 +1,5 @@
 import { GameBoardCellComponent } from './../game-board-cell/game-board-cell.component';
+
 export class GameCell {
   row: number;
   column: number;
@@ -20,5 +21,6 @@ export class DynamicContext {
 }
 
 export class Consts {
+  static readonly VISIBLE = ''; // jesli nie ma klasy "chowającej" to element bedzie widoczny
   static readonly HIDDEN = 'visibility-hidden';
 }
