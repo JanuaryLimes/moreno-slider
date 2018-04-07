@@ -1,7 +1,6 @@
 import { DynamicCellComponent } from './../dynamic-cell/dynamic-cell.component';
 import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { SliderManager } from '../game-logic/slider-manager';
-import { GameCell } from '../game-logic/game-cell';
 
 @Component({
   selector: 'slider-game-board-cell',

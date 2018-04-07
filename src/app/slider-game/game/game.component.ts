@@ -11,7 +11,7 @@ import {
   AfterViewInit
 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { GameCell, Consts } from '../game-logic/game-cell';
+import { Consts } from '../game-logic/game-cell';
 
 @Component({
   selector: 'slider-game',
@@ -27,8 +27,8 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     const that = this;
     this.subscription = this.sliderManager.GameCellClicked.subscribe(
-      gameCell => {
-        that.sliderManager.clicked(gameCell);
+      gameBoardCellComponent => {
+        that.sliderManager.clicked(gameBoardCellComponent);
       }
     );
   }

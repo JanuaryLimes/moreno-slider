@@ -1,4 +1,4 @@
-import { GameCell, Consts } from './game-cell';
+import { Consts } from './game-cell';
 import { GameBoardCellComponent } from './../game-board-cell/game-board-cell.component';
 
 export class MoveManager {

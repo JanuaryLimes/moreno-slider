@@ -3,7 +3,7 @@ import { Injectable, QueryList } from '@angular/core';
 import { ShuffleManager } from './shuffle-manager';
 import { MoveManager } from './move-manager';
 import { Subject } from 'rxjs/Subject';
-import { GameCell, Consts } from './game-cell';
+import { Consts } from './game-cell';
 
 @Injectable()
 export class SliderManager {
