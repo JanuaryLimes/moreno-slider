@@ -1,5 +1,5 @@
 <div class="parent">
-  <div class="child">
+  <div class="child" [@cellState]="animation_state">
     <div class="outer {{visibilityClass}}" (click)="onClick()">
       <div class="inner">
         <slider-dynamic-cell id="r{{rowNumber}}-c{{columnNumber}}"></slider-dynamic-cell>
