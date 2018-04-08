@@ -43,7 +43,7 @@ export class GameBoardCellComponent implements OnInit {
   ngOnInit() {}
 
   private onClick() {
-    this.sliderManager.GameCellClicked.next(this);
+    this.sliderManager.clicked(this);
   }
 
   public restoreNormal() {

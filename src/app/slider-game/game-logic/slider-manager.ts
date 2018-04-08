@@ -10,7 +10,6 @@ export class SliderManager {
   private shuffleManager: ShuffleManager;
   private moveManager = new MoveManager();
 
-  public GameCellClicked = new Subject<GameBoardCellComponent>();
   public BoardLoaded = new Subject();
   public GameCells: GameBoardCellComponent[] = new Array();
 
@@ -32,14 +31,15 @@ export class SliderManager {
     this.moveManager.tryClick(component);
   }
 
+  public shuffleClicked() {
+    this.shuffleManager.shuffleBoard();
+  }
+
   private loaded() {
     console.log('loadedddd');
 
     this.setNumbers();
     this.setHiddenComponent();
-    this.shuffleManager.shuffleBoard();
-
-    this.makeLastHiddenAfterShuffle();
   }
 
   private setNumbers() {
@@ -50,23 +50,7 @@ export class SliderManager {
 
   private setHiddenComponent() {
     const cell = this.GameCells[this.GameCells.length - 1];
+    cell.visibilityClass = Consts.HIDDEN;
     this.moveManager.hiddenComponent = cell;
-  }
-
-  private makeLastHiddenAfterShuffle() {
-    const lastCell = this.GameCells[this.GameCells.length - 1];
-    if (lastCell.visibilityClass === Consts.HIDDEN) {
-      return;
-    }
-
-    const temp = this.moveManager.hiddenComponent;
-
-    this.moveManager.hiddenComponent.visibilityClass = Consts.VISIBLE;
-    this.moveManager.hiddenComponent.dynamiCell.context.num =
-      lastCell.dynamiCell.context.num;
-
-    lastCell.visibilityClass = Consts.HIDDEN;
-    lastCell.dynamiCell.context.num = temp.dynamiCell.context.num;
-    this.moveManager.hiddenComponent = lastCell;
   }
 }
