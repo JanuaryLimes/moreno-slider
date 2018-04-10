@@ -7,6 +7,7 @@ export class MoveManager {
   private hiddenRow: number;
   private clickedCol: number;
   private hiddenCol: number;
+  private allMoves: Moves[] = [];
 
   public hiddenComponent: GameBoardCellComponent;
   public clickedComponent: GameBoardCellComponent;
@@ -17,6 +18,9 @@ export class MoveManager {
     if (!this.isClickValid()) {
       return;
     }
+
+    this.allMoves.push(this.currentMove);
+    // console.log(`ilosc ruchów: ${this.allMoves.length}`);
 
     this.hiddenComponent.visibilityClass = Consts.VISIBLE;
     this.hiddenComponent.dynamiCell.context.num =

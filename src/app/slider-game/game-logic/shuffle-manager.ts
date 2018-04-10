@@ -13,7 +13,7 @@ export class ShuffleManager {
   }
 
   public shuffleBoard() {
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 500; i++) {
       this.tryMove();
     }
 
