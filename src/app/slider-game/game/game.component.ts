@@ -1,5 +1,5 @@
 import { SliderManager } from './../game-logic/slider-manager';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Consts } from '../game-logic/game-cell';
 
 @Component({
@@ -7,18 +7,12 @@ import { Consts } from '../game-logic/game-cell';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css']
 })
-export class GameComponent implements OnInit, AfterViewInit {
+export class GameComponent implements OnInit {
   constructor(private sliderManager: SliderManager) {}
 
   ngOnInit() {}
 
   shuffleClicked() {
     this.sliderManager.shuffleClicked();
-  }
-
-  ngAfterViewInit(): void {
-    Promise.resolve(null).then(() => {
-      this.sliderManager.BoardLoaded.next();
-    });
   }
 }

@@ -3,20 +3,17 @@ import {
   OnInit,
   ViewChildren,
   QueryList,
-  AfterViewInit,
-  OnDestroy
+  AfterViewInit
 } from '@angular/core';
 import { GameBoardCellComponent } from '../game-board-cell/game-board-cell.component';
 import { SliderManager } from '../game-logic/slider-manager';
-import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'slider-game-board',
   templateUrl: './game-board.component.html',
   styleUrls: ['./game-board.component.css']
 })
-export class GameBoardComponent implements OnInit, OnDestroy {
-  boardSub: Subscription;
+export class GameBoardComponent implements OnInit, AfterViewInit {
   @ViewChildren(GameBoardCellComponent)
   cells: QueryList<GameBoardCellComponent>;
 
@@ -26,19 +23,13 @@ export class GameBoardComponent implements OnInit, OnDestroy {
   rows = [].constructor(this.rowCount);
   columns = [].constructor(this.columnCount);
 
-  constructor(private sliderManager: SliderManager) {
-    this.boardSub = sliderManager.BoardLoaded.subscribe(() => {
-      this.boardLoaded();
-    });
-  }
+  constructor(private sliderManager: SliderManager) {}
 
   ngOnInit() {}
 
-  ngOnDestroy(): void {
-    this.boardSub.unsubscribe();
-  }
-
-  boardLoaded(): any {
-    this.sliderManager.updateGameCells(this.cells);
+  ngAfterViewInit(): void {
+    Promise.resolve(null).then(() => {
+      this.sliderManager.updateGameCells(this.cells);
+    });
   }
 }

@@ -10,7 +10,6 @@ export class SliderManager {
   private shuffleManager: ShuffleManager;
   private moveManager = new MoveManager();
 
-  public BoardLoaded = new Subject();
   public GameCells: GameBoardCellComponent[] = new Array();
 
   constructor() {
