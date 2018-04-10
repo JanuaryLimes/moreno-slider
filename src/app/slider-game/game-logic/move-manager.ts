@@ -1,7 +1,9 @@
 import { Consts, Moves } from './game-cell';
 import { GameBoardCellComponent } from './../game-board-cell/game-board-cell.component';
+import { SliderManager } from './slider-manager';
 
 export class MoveManager {
+  private sliderManager: SliderManager;
   private currentMove: Moves;
   private clickedRow: number;
   private hiddenRow: number;
@@ -12,6 +14,10 @@ export class MoveManager {
   public hiddenComponent: GameBoardCellComponent;
   public clickedComponent: GameBoardCellComponent;
 
+  constructor(sliderManager: SliderManager) {
+    this.sliderManager = sliderManager;
+  }
+
   public tryClick(component: GameBoardCellComponent): any {
     this.clickedComponent = component;
 
@@ -20,7 +26,6 @@ export class MoveManager {
     }
 
     this.allMoves.push(this.currentMove);
-    // console.log(`ilosc ruchów: ${this.allMoves.length}`);
 
     this.hiddenComponent.visibilityClass = Consts.VISIBLE;
     this.hiddenComponent.dynamiCell.context.num =
@@ -119,5 +124,66 @@ export class MoveManager {
     }
 
     return false;
+  }
+
+  public getAvailableComponentsToMove(): GameBoardCellComponent[] {
+    this.hiddenRow = this.hiddenComponent.rowNumber;
+    this.hiddenCol = this.hiddenComponent.columnNumber;
+
+    const avMoves: GameBoardCellComponent[] = [];
+
+    const leftFromHidden = this.getLeftFromHidden();
+    if (leftFromHidden) {
+      avMoves.push(leftFromHidden);
+    }
+
+    const right = this.getRightFromHidden();
+    if (right) {
+      avMoves.push(right);
+    }
+
+    const up = this.getUpFromHidden();
+    if (up) {
+      avMoves.push(up);
+    }
+
+    const down = this.getDownFromHidden();
+    if (down) {
+      avMoves.push(down);
+    }
+
+    return avMoves;
+  }
+
+  private getLeftFromHidden(): GameBoardCellComponent {
+    return this.sliderManager.GameCells.find(
+      item =>
+        item.rowNumber === this.hiddenRow &&
+        item.columnNumber === this.hiddenCol - 1
+    );
+  }
+
+  private getRightFromHidden(): GameBoardCellComponent {
+    return this.sliderManager.GameCells.find(
+      item =>
+        item.rowNumber === this.hiddenRow &&
+        item.columnNumber === this.hiddenCol + 1
+    );
+  }
+
+  private getUpFromHidden(): GameBoardCellComponent {
+    return this.sliderManager.GameCells.find(
+      item =>
+        item.rowNumber === this.hiddenRow - 1 &&
+        item.columnNumber === this.hiddenCol
+    );
+  }
+
+  private getDownFromHidden(): GameBoardCellComponent {
+    return this.sliderManager.GameCells.find(
+      item =>
+        item.rowNumber === this.hiddenRow + 1 &&
+        item.columnNumber === this.hiddenCol
+    );
   }
 }

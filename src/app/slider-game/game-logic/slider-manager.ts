@@ -8,11 +8,12 @@ import { Consts } from './game-cell';
 @Injectable()
 export class SliderManager {
   private shuffleManager: ShuffleManager;
-  private moveManager = new MoveManager();
+  private moveManager: MoveManager;
 
   public GameCells: GameBoardCellComponent[] = new Array();
 
   constructor() {
+    this.moveManager = new MoveManager(this);
     this.shuffleManager = new ShuffleManager(this, this.moveManager);
   }
 

@@ -13,7 +13,7 @@ export class ShuffleManager {
   }
 
   public shuffleBoard() {
-    for (let i = 0; i < 500; i++) {
+    for (let i = 0; i < 80; i++) {
       this.tryMove();
     }
 
@@ -29,8 +29,10 @@ export class ShuffleManager {
   }
 
   private getComponentToMove(): GameBoardCellComponent {
-    const gameCells = this.sliderManager.GameCells;
-    return gameCells[this.getRandomInt(0, gameCells.length - 1)];
+    const availableComponentsToMove = this.moveManager.getAvailableComponentsToMove();
+    return availableComponentsToMove[
+      this.getRandomInt(0, availableComponentsToMove.length - 1)
+    ];
   }
 
   private getRandomInt(min: number, max: number): number {
