@@ -12,7 +12,15 @@ export class GameComponent implements OnInit {
 
   ngOnInit() {}
 
-  shuffleClicked() {
-    this.sliderManager.shuffleClicked();
+  private newClicked() {
+    console.log('new');
+  }
+
+  private resetClicked() {
+    console.log('reset');
+  }
+
+  private solveClicked() {
+    console.log('solve');
   }
 }
