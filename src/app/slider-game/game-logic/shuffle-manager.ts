@@ -17,7 +17,6 @@ export class ShuffleManager {
       this.tryMove();
     }
 
-    this.makeLastHiddenAfterShuffle();
     this.moveManager.SaveRandomizedMoves();
   }
 

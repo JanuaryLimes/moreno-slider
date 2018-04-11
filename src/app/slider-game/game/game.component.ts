@@ -23,6 +23,7 @@ export class GameComponent implements OnInit {
   }
 
   private solveClicked() {
+    this.sliderManager.Solve();
     console.log('solve');
   }
 }

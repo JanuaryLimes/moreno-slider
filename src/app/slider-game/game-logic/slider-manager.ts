@@ -41,6 +41,7 @@ export class SliderManager {
   private setNumbers() {
     this.GameCells.forEach((gameBoardCellComponent, index) => {
       gameBoardCellComponent.dynamiCell.context.num = index + 1;
+      gameBoardCellComponent.visibilityClass = Consts.VISIBLE;
     });
   }
 
@@ -59,5 +60,9 @@ export class SliderManager {
 
   public reset() {
     this.moveManager.RevertUserMoves();
+  }
+
+  public Solve() {
+    this.moveManager.SolveBoard();
   }
 }

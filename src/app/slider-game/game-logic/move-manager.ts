@@ -46,12 +46,34 @@ export class MoveManager {
   }
 
   public Clear() {
+    this.clearUserMoves();
+    this.clearRandomizedMoves();
+  }
+
+  private clearUserMoves() {
     this.mUserMoves = [];
+  }
+
+  private clearRandomizedMoves() {
     this.mRandomizedMoves = [];
   }
 
   public RevertUserMoves() {
     const movesCopy = this.mUserMoves.reverse();
+    const l = movesCopy.length;
+
+    for (let index = 0; index < l; index++) {
+      const element = movesCopy[index];
+      this.updateHiddenRowCol();
+      this.revertMove(element);
+    }
+
+    this.clearUserMoves();
+  }
+
+  public SolveBoard() {
+    let movesCopy = this.mUserMoves.reverse();
+    movesCopy = movesCopy.concat(this.mRandomizedMoves.reverse());
     const l = movesCopy.length;
 
     for (let index = 0; index < l; index++) {
