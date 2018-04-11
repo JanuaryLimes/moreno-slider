@@ -28,11 +28,7 @@ export class SliderManager {
   }
 
   public clicked(component: GameBoardCellComponent): any {
-    this.moveManager.tryClick(component);
-  }
-
-  public shuffleClicked() {
-    this.shuffleManager.shuffleBoard();
+    this.moveManager.TryClick(component);
   }
 
   private loaded() {
@@ -51,6 +47,17 @@ export class SliderManager {
   private setHiddenComponent() {
     const cell = this.GameCells[this.GameCells.length - 1];
     cell.visibilityClass = Consts.HIDDEN;
-    this.moveManager.hiddenComponent = cell;
+    this.moveManager.HiddenComponent = cell;
+  }
+
+  public newGameClicked() {
+    // TODO: zerowanei jakis wynikow itp
+    this.loaded();
+    this.moveManager.Clear();
+    this.shuffleManager.shuffleBoard();
+  }
+
+  public reset() {
+    this.moveManager.RevertUserMoves();
   }
 }

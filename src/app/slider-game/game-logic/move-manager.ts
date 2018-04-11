@@ -3,79 +3,133 @@ import { GameBoardCellComponent } from './../game-board-cell/game-board-cell.com
 import { SliderManager } from './slider-manager';
 
 export class MoveManager {
-  private sliderManager: SliderManager;
-  private currentMove: Moves;
-  private clickedRow: number;
-  private hiddenRow: number;
-  private clickedCol: number;
-  private hiddenCol: number;
-  private allMoves: Moves[] = [];
+  private mSliderManager: SliderManager;
+  private mCurrentMove: Moves;
+  private mClickedRow: number;
+  private mHiddenRow: number;
+  private mClickedCol: number;
+  private mHiddenCol: number;
+  private mUserMoves: Moves[] = [];
+  private mRandomizedMoves: Moves[] = [];
 
-  public hiddenComponent: GameBoardCellComponent;
-  public clickedComponent: GameBoardCellComponent;
+  public HiddenComponent: GameBoardCellComponent;
+  public ClickedComponent: GameBoardCellComponent;
 
   constructor(sliderManager: SliderManager) {
-    this.sliderManager = sliderManager;
+    this.mSliderManager = sliderManager;
   }
 
-  public tryClick(component: GameBoardCellComponent): any {
-    this.clickedComponent = component;
+  public TryClick(component: GameBoardCellComponent): any {
+    this.ClickedComponent = component;
+    this.updateClickedRowCol();
+    this.updateHiddenRowCol();
 
     if (!this.isClickValid()) {
       return;
     }
 
-    this.allMoves.push(this.currentMove);
+    this.mUserMoves.push(this.mCurrentMove);
 
-    this.hiddenComponent.visibilityClass = Consts.VISIBLE;
-    this.hiddenComponent.dynamiCell.context.num =
+    this.HiddenComponent.visibilityClass = Consts.VISIBLE;
+    this.HiddenComponent.dynamiCell.context.num =
       component.dynamiCell.context.num;
 
     this.applyValidAnimation();
 
     component.visibilityClass = Consts.HIDDEN;
-    this.hiddenComponent = component;
+    this.HiddenComponent = component;
   }
 
-  private applyValidAnimation() {
-    switch (this.currentMove) {
+  public SaveRandomizedMoves() {
+    this.mRandomizedMoves = this.mUserMoves;
+    this.mUserMoves = [];
+  }
+
+  public Clear() {
+    this.mUserMoves = [];
+    this.mRandomizedMoves = [];
+  }
+
+  public RevertUserMoves() {
+    const movesCopy = this.mUserMoves.reverse();
+    const l = movesCopy.length;
+
+    for (let index = 0; index < l; index++) {
+      const element = movesCopy[index];
+      this.updateHiddenRowCol();
+      this.revertMove(element);
+    }
+
+    this.Clear();
+  }
+
+  private revertMove(move: Moves) {
+    let elem;
+    switch (move) {
       case Moves.down:
-        this.hiddenComponent.animation_state = Consts.DOWN;
+        elem = this.getDownFromHidden();
         break;
       case Moves.up:
-        this.hiddenComponent.animation_state = Consts.UP;
+        elem = this.getUpFromHidden();
         break;
       case Moves.left:
-        this.hiddenComponent.animation_state = Consts.LEFT;
+        elem = this.getLeftFromHidden();
         break;
       case Moves.right:
-        this.hiddenComponent.animation_state = Consts.RIGHT;
+        elem = this.getRightFromHidden();
         break;
       default:
         break;
     }
 
-    this.hiddenComponent.restoreNormal();
+    this.TryClick(elem);
+  }
+
+  private applyValidAnimation() {
+    switch (this.mCurrentMove) {
+      case Moves.down:
+        this.HiddenComponent.animation_state = Consts.DOWN;
+        break;
+      case Moves.up:
+        this.HiddenComponent.animation_state = Consts.UP;
+        break;
+      case Moves.left:
+        this.HiddenComponent.animation_state = Consts.LEFT;
+        break;
+      case Moves.right:
+        this.HiddenComponent.animation_state = Consts.RIGHT;
+        break;
+      default:
+        break;
+    }
+
+    this.HiddenComponent.restoreNormal();
+  }
+
+  private updateClickedRowCol() {
+    this.mClickedRow = this.ClickedComponent.rowNumber;
+    this.mClickedCol = this.ClickedComponent.columnNumber;
+  }
+
+  private updateHiddenRowCol() {
+    this.mHiddenRow = this.HiddenComponent.rowNumber;
+    this.mHiddenCol = this.HiddenComponent.columnNumber;
   }
 
   private isClickValid(): boolean {
-    this.clickedRow = this.clickedComponent.rowNumber;
-    this.hiddenRow = this.hiddenComponent.rowNumber;
-    this.clickedCol = this.clickedComponent.columnNumber;
-    this.hiddenCol = this.hiddenComponent.columnNumber;
-    this.currentMove = Moves.none;
+    this.mCurrentMove = Moves.none;
 
     if (this.isMoveDown()) {
-      this.currentMove = Moves.down;
+      this.mCurrentMove = Moves.down;
       return true;
     } else if (this.isMoveUp()) {
-      this.currentMove = Moves.up;
+      this.mCurrentMove = Moves.up;
       return true;
     } else if (this.isMoveLeft()) {
-      this.currentMove = Moves.left;
+      this.mCurrentMove = Moves.left;
       return true;
     } else if (this.isMoveRight()) {
-      this.currentMove = Moves.right;
+      this.mCurrentMove = Moves.right;
       return true;
     } else {
       return false;
@@ -84,8 +138,8 @@ export class MoveManager {
 
   private isMoveDown(): boolean {
     if (
-      this.clickedRow + 1 === this.hiddenRow &&
-      this.clickedCol === this.hiddenCol
+      this.mClickedRow + 1 === this.mHiddenRow &&
+      this.mClickedCol === this.mHiddenCol
     ) {
       return true;
     }
@@ -95,8 +149,8 @@ export class MoveManager {
 
   private isMoveUp(): boolean {
     if (
-      this.clickedRow - 1 === this.hiddenRow &&
-      this.clickedCol === this.hiddenCol
+      this.mClickedRow - 1 === this.mHiddenRow &&
+      this.mClickedCol === this.mHiddenCol
     ) {
       return true;
     }
@@ -106,8 +160,8 @@ export class MoveManager {
 
   private isMoveLeft(): boolean {
     if (
-      this.clickedRow === this.hiddenRow &&
-      this.clickedCol - 1 === this.hiddenCol
+      this.mClickedRow === this.mHiddenRow &&
+      this.mClickedCol - 1 === this.mHiddenCol
     ) {
       return true;
     }
@@ -117,8 +171,8 @@ export class MoveManager {
 
   private isMoveRight(): boolean {
     if (
-      this.clickedRow === this.hiddenRow &&
-      this.clickedCol + 1 === this.hiddenCol
+      this.mClickedRow === this.mHiddenRow &&
+      this.mClickedCol + 1 === this.mHiddenCol
     ) {
       return true;
     }
@@ -126,9 +180,8 @@ export class MoveManager {
     return false;
   }
 
-  public getAvailableComponentsToMove(): GameBoardCellComponent[] {
-    this.hiddenRow = this.hiddenComponent.rowNumber;
-    this.hiddenCol = this.hiddenComponent.columnNumber;
+  public GetAvailableComponentsToMove(): GameBoardCellComponent[] {
+    this.updateHiddenRowCol();
 
     const avMoves: GameBoardCellComponent[] = [];
 
@@ -156,34 +209,34 @@ export class MoveManager {
   }
 
   private getLeftFromHidden(): GameBoardCellComponent {
-    return this.sliderManager.GameCells.find(
+    return this.mSliderManager.GameCells.find(
       item =>
-        item.rowNumber === this.hiddenRow &&
-        item.columnNumber === this.hiddenCol - 1
+        item.rowNumber === this.mHiddenRow &&
+        item.columnNumber === this.mHiddenCol - 1
     );
   }
 
   private getRightFromHidden(): GameBoardCellComponent {
-    return this.sliderManager.GameCells.find(
+    return this.mSliderManager.GameCells.find(
       item =>
-        item.rowNumber === this.hiddenRow &&
-        item.columnNumber === this.hiddenCol + 1
+        item.rowNumber === this.mHiddenRow &&
+        item.columnNumber === this.mHiddenCol + 1
     );
   }
 
   private getUpFromHidden(): GameBoardCellComponent {
-    return this.sliderManager.GameCells.find(
+    return this.mSliderManager.GameCells.find(
       item =>
-        item.rowNumber === this.hiddenRow - 1 &&
-        item.columnNumber === this.hiddenCol
+        item.rowNumber === this.mHiddenRow - 1 &&
+        item.columnNumber === this.mHiddenCol
     );
   }
 
   private getDownFromHidden(): GameBoardCellComponent {
-    return this.sliderManager.GameCells.find(
+    return this.mSliderManager.GameCells.find(
       item =>
-        item.rowNumber === this.hiddenRow + 1 &&
-        item.columnNumber === this.hiddenCol
+        item.rowNumber === this.mHiddenRow + 1 &&
+        item.columnNumber === this.mHiddenCol
     );
   }
 }

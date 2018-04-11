@@ -13,10 +13,12 @@ export class GameComponent implements OnInit {
   ngOnInit() {}
 
   private newClicked() {
+    this.sliderManager.newGameClicked();
     console.log('new');
   }
 
   private resetClicked() {
+    this.sliderManager.reset();
     console.log('reset');
   }
 

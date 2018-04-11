@@ -18,18 +18,19 @@ export class ShuffleManager {
     }
 
     this.makeLastHiddenAfterShuffle();
+    this.moveManager.SaveRandomizedMoves();
   }
 
   private tryMove() {
     const component = this.getComponentToMove();
 
     if (component) {
-      this.moveManager.tryClick(component);
+      this.moveManager.TryClick(component);
     }
   }
 
   private getComponentToMove(): GameBoardCellComponent {
-    const availableComponentsToMove = this.moveManager.getAvailableComponentsToMove();
+    const availableComponentsToMove = this.moveManager.GetAvailableComponentsToMove();
     return availableComponentsToMove[
       this.getRandomInt(0, availableComponentsToMove.length - 1)
     ];
@@ -46,14 +47,14 @@ export class ShuffleManager {
       return;
     }
 
-    const temp = this.moveManager.hiddenComponent;
+    const temp = this.moveManager.HiddenComponent;
 
-    this.moveManager.hiddenComponent.visibilityClass = Consts.VISIBLE;
-    this.moveManager.hiddenComponent.dynamiCell.context.num =
+    this.moveManager.HiddenComponent.visibilityClass = Consts.VISIBLE;
+    this.moveManager.HiddenComponent.dynamiCell.context.num =
       lastCell.dynamiCell.context.num;
 
     lastCell.visibilityClass = Consts.HIDDEN;
     lastCell.dynamiCell.context.num = temp.dynamiCell.context.num;
-    this.moveManager.hiddenComponent = lastCell;
+    this.moveManager.HiddenComponent = lastCell;
   }
 }
