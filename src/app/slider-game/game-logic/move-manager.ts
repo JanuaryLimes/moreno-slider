@@ -20,6 +20,10 @@ export class MoveManager {
   }
 
   public TryClick(component: GameBoardCellComponent): any {
+    if (this.mSliderManager.ClickBlocked()) {
+      return;
+    }
+
     if (!component) {
       return;
     }
@@ -42,6 +46,8 @@ export class MoveManager {
 
     component.visibilityClass = Consts.HIDDEN;
     this.HiddenComponent = component;
+
+    this.mSliderManager.ClickSuccessful();
   }
 
   public SaveRandomizedMoves() {
