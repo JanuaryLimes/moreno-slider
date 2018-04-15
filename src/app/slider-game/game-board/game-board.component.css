@@ -1,0 +1,14 @@
+.child-row {
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.cell {
+  display: inline-block;
+  text-align: initial;
+}
+
+.cell:hover {
+  cursor: pointer;
+}
