@@ -1,5 +1,5 @@
 import { SliderManager } from './../game-logic/slider-manager';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Consts } from '../game-logic/game-cell';
 
 @Component({
@@ -25,5 +25,11 @@ export class GameComponent implements OnInit {
   private solveClicked() {
     this.sliderManager.Solve();
     console.log('solve');
+  }
+
+  @HostListener('window:keyup', ['$event'])
+  onKeyup(event: KeyboardEvent) {
+    // console.log('keyup..', event);
+    this.sliderManager.KeyUp(event.keyCode);
   }
 }

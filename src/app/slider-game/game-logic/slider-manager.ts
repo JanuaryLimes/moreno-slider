@@ -65,4 +65,8 @@ export class SliderManager {
   public Solve() {
     this.moveManager.SolveBoard();
   }
+
+  public KeyUp(keyCode: number) {
+    this.moveManager.MoveFromKeyCode(keyCode);
+  }
 }

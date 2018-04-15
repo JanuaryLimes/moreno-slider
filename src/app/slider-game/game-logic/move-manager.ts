@@ -1,4 +1,4 @@
-import { Consts, Moves } from './game-cell';
+import { Consts, Moves, Key } from './game-cell';
 import { GameBoardCellComponent } from './../game-board-cell/game-board-cell.component';
 import { SliderManager } from './slider-manager';
 
@@ -20,6 +20,10 @@ export class MoveManager {
   }
 
   public TryClick(component: GameBoardCellComponent): any {
+    if (!component) {
+      return;
+    }
+
     this.ClickedComponent = component;
     this.updateClickedRowCol();
     this.updateHiddenRowCol();
@@ -78,14 +82,28 @@ export class MoveManager {
 
     for (let index = 0; index < l; index++) {
       const element = movesCopy[index];
-      this.updateHiddenRowCol();
       this.revertMove(element);
     }
 
     this.Clear();
   }
 
+  public MoveFromKeyCode(keyCode: number) {
+    if (keyCode === Key.UP || keyCode === Key.W) {
+      this.revertMove(Moves.down);
+    } else if (keyCode === Key.DOWN || keyCode === Key.S) {
+      this.revertMove(Moves.up);
+    } else if (keyCode === Key.RIGHT || keyCode === Key.D) {
+      this.revertMove(Moves.left);
+    } else if (keyCode === Key.LEFT || keyCode === Key.A) {
+      this.revertMove(Moves.right);
+    } else {
+      return;
+    }
+  }
+
   private revertMove(move: Moves) {
+    this.updateHiddenRowCol();
     let elem;
     switch (move) {
       case Moves.down:
