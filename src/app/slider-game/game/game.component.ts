@@ -32,4 +32,11 @@ export class GameComponent implements OnInit {
     // console.log('keyup..', event);
     this.sliderManager.KeyUp(event.keyCode);
   }
+
+  @HostListener('window:keydown', ['$event'])
+  onKeydown(e: KeyboardEvent) {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      e.preventDefault();
+    }
+  }
 }
