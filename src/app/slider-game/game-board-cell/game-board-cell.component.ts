@@ -38,11 +38,11 @@ export class GameBoardCellComponent implements OnInit {
 
   @ViewChild(DynamicCellComponent) dynamiCell: DynamicCellComponent;
 
-  constructor(private sliderManager: SliderManager, public elem: ElementRef) {}
+  constructor(private sliderManager: SliderManager, public elem: ElementRef) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  private onClick() {
+  public onClick() {
     this.sliderManager.clicked(this);
   }
 
