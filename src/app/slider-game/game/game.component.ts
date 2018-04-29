@@ -8,21 +8,21 @@ import { Consts } from '../game-logic/game-cell';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
-  constructor(private sliderManager: SliderManager) {}
+  constructor(private sliderManager: SliderManager) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  private newClicked() {
+  public newClicked() {
     this.sliderManager.newGameClicked();
     console.log('new');
   }
 
-  private resetClicked() {
+  public resetClicked() {
     this.sliderManager.reset();
     console.log('reset');
   }
 
-  private solveClicked() {
+  public solveClicked() {
     this.sliderManager.Solve();
     console.log('solve');
   }
