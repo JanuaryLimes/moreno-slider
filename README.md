@@ -1,1 +1,1 @@
-# MorenoSlider
+# [MorenoSlider](https://slider.now.sh/) 
