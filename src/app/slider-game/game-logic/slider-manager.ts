@@ -2,7 +2,6 @@ import { GameBoardCellComponent } from './../game-board-cell/game-board-cell.com
 import { Injectable, QueryList } from '@angular/core';
 import { ShuffleManager } from './shuffle-manager';
 import { MoveManager } from './move-manager';
-import { Subject } from 'rxjs/Subject';
 import { Consts } from './game-cell';
 
 @Injectable()
@@ -37,7 +36,7 @@ export class SliderManager {
   }
 
   private loaded() {
-    console.log('loadedddd');
+    console.log('loaded');
 
     this.setNumbers();
     this.setHiddenComponent();
@@ -108,7 +107,7 @@ export class SliderManager {
       setTimeout(() => {
         // czekamy na skonczenie animacji
         alert('Wygrałeś!');
-      }, 300);
+      }, 350);
     }
   }
 
