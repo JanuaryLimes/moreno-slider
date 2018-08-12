@@ -3,6 +3,7 @@ import { Injectable, QueryList } from '@angular/core';
 import { ShuffleManager } from './shuffle-manager';
 import { MoveManager } from './move-manager';
 import { Consts } from './game-cell';
+import swal from 'sweetalert';
 
 @Injectable()
 export class SliderManager {
@@ -104,10 +105,13 @@ export class SliderManager {
     if (this.gameIsSolved()) {
       this.GameStarted = false;
 
-      setTimeout(() => {
-        // czekamy na skonczenie animacji
-        alert('Wygrałeś!');
-      }, 350);
+      swal({
+        title: 'Wygrałeś!',
+        icon: 'success',
+        buttons: [false],
+        text: ' ',
+        timer: 2000
+      });
     }
   }
 
