@@ -2,3 +2,6 @@ p {
   margin: 0;
   padding: 10px;
 }
+.max {
+  max-width: 500px;
+}

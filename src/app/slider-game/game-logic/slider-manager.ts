@@ -2,8 +2,8 @@ import { GameBoardCellComponent } from './../game-board-cell/game-board-cell.com
 import { Injectable, QueryList } from '@angular/core';
 import { ShuffleManager } from './shuffle-manager';
 import { MoveManager } from './move-manager';
-import { Subject } from 'rxjs/Subject';
 import { Consts } from './game-cell';
+import swal from 'sweetalert';
 
 @Injectable()
 export class SliderManager {
@@ -37,7 +37,7 @@ export class SliderManager {
   }
 
   private loaded() {
-    console.log('loadedddd');
+    console.log('loaded');
 
     this.setNumbers();
     this.setHiddenComponent();
@@ -105,10 +105,13 @@ export class SliderManager {
     if (this.gameIsSolved()) {
       this.GameStarted = false;
 
-      setTimeout(() => {
-        // czekamy na skonczenie animacji
-        alert('Wygrałeś!');
-      }, 300);
+      swal({
+        title: 'Wygrałeś!',
+        icon: 'success',
+        buttons: [false],
+        text: ' ',
+        timer: 2000
+      });
     }
   }
 
